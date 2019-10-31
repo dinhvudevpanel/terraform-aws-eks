@@ -24,7 +24,7 @@ You can configure you config with the following input variables:
 | `aws-region`              | The AWS Region to deploy EKS       | `us-east-2`                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `availability-zones`      | AWS Availability Zones             | `["us-east-2a", "us-east-2b", "us-east-2c"]`                                                                                                                                                                                                                                                                                                                                                                     |
 | `k8s-version`             | The desired K8s version to launch  | `1.13`                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `node-instance-type`      | Worker Node EC2 instance type      | `t2.`                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `node-instance-type`      | Worker Node EC2 instance type      | `t2.medium`                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `root-block-size`         | Size of the root EBS block device  | `20`                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `desired-capacity`        | Autoscaling Desired node capacity  | `2`                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `max-size`                | Autoscaling Maximum node capacity  | `5`                                                                                                                                                                                                                                                                                                                                                                                                              |
@@ -93,7 +93,7 @@ sudo kubectl edit -n kube-system configmap/aws-auth
 ```yaml
 
 mapUsers: |
-  - userarn: arn:aws:iam::111122223333:user/<username>
+  - userarn: arn:aws:iam::123456789:user/<username>
     username: <username>
     groups:
       - system:masters
@@ -105,13 +105,13 @@ So, the final configuration would look like this:
 apiVersion: v1
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::555555555555:role/devel-worker-nodes-NodeInstanceRole-74RF4UBDUKL6
+    - rolearn: arn:aws:iam::123456789:role/devel-worker-nodes-NodeInstanceRole-74RF4UBDUKL6
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
         - system:nodes
   mapUsers: |
-    - userarn: arn:aws:iam::111122223333:user/<username>
+    - userarn: arn:aws:iam::1234567893:user/<username>
       username: <username>
       groups:
         - system:masters
